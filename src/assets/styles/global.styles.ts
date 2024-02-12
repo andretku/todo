@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
-import { greyColor } from './app.styles'
+import { mainBgc } from './app.styles'
 
 export default createGlobalStyle`
   body {
@@ -9,7 +9,7 @@ export default createGlobalStyle`
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    ${greyColor}
+    ${mainBgc}
   }
 
   code {

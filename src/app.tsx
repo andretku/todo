@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { data } from "./data/data";
-import { Container, H1, H2, Main } from "./assets/styles/app.styles";
-import { Button } from "@mui/material";
+import { Container, H1, H2, Main, Button } from "./assets/styles/app.styles";
 import { addNewItem } from "./store/itemsSlice";
 import { Input } from "@mui/base";
 import { IData } from "./models/interface";
@@ -10,6 +9,7 @@ import AddItem from "./components/AddItem";
 import TodoList from "./components/TodoList";
 import { useAppDispatch } from "./hooks/useAppDispatch";
 import { useAppSelector } from "./hooks/useAppSelector";
+import { WrapperBtn } from "./components/Todo.styled";
 
 
 function App() {
@@ -20,13 +20,13 @@ function App() {
 
     const [todos, setTodos] = useState(data)
 
-    useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(todos))
-    }, [])
+    // useEffect(() => {
+    //     localStorage.setItem('todos', JSON.stringify(todos))
+    // }, [])
 
-    useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(items))
-    }, [items])
+    // useEffect(() => {
+    //     localStorage.setItem('todos', JSON.stringify(items))
+    // }, [items])
 
     useEffect(() => {
         setTodos(items)
@@ -62,8 +62,14 @@ function App() {
                 <H1>Todont</H1>
                 <AddItem />
 
+                <WrapperBtn>
+                    <Button $header>All tasks</Button>
+                    <Button $header>Active tasks</Button>
+                    <Button $header>Completed tasks</Button>
+                </WrapperBtn>
 
                 <H2>{todos.length} tasks remaining</H2>
+
                 <TodoList />
             </Container>
         </Main>

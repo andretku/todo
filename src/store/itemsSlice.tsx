@@ -10,12 +10,11 @@ const itemsSlice = createSlice({
     initialState: data,
     reducers: {
         addNewItem(state, action: PayloadAction<string>) {
-            const newItem: IData = {
-                id: Date.now() + action.payload,
+            state.push({
+                id: Date.now().toLocaleString(),
                 title: action.payload,
                 completed: false
-            }
-            return {...state, newItem}
+            })
         },
         itemsList(state) {
             return state

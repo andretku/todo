@@ -8,24 +8,19 @@ import { itemsList } from '../store/itemsSlice'
 
 const TodoList = () => {
 
-    const dispatch = useAppDispatch()
     const items = useAppSelector(store => store.items)
 
-    useEffect(() => {
-        dispatch(itemsList())
-    }, [items])
 
     console.log(items)
 
   return (
     <div>
-        {/* {items.map((elem: IData) => <TodoItem
+        {items.map((elem: IData) => <TodoItem
                                 key={elem.id}
                                 id={elem.id}
                                 title={elem.title}
                                 completed={elem.completed}
-
-                            />)} */}
+                            />)}
 
     </div>
   )
