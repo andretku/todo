@@ -1,22 +1,43 @@
-import React, { KeyboardEvent } from 'react'
+import React, { useState, ChangeEvent } from 'react'
+import { Button } from '../assets/styles/app.styles';
+import { addNewItem } from "../store/itemsSlice";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { useAppSelector } from "../hooks/useAppSelector";
+import { TextField } from "@mui/material";
 
-const AddItem = (props: {addTodo: (title: string) => void}) => {
+const AddItem = () => {
 
-    const {addTodo} = props
+    const dispatch = useAppDispatch()
+    const [value, setValue] = useState('')
 
-    const handler = (event: KeyboardEvent): void => {
-        const target = event.target as HTMLInputElement;
-        if(event.key === "Enter") addTodo(target.value)
+    const handler = (value: string) => {
+        dispatch(addNewItem(value))
+        setValue('')
     }
 
-  return (
-    <div className="input_elem">
-        <input
-            type='text'
-            onKeyDown={handler}
-        />
-    </div>
-  )
+    const handlerChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setValue(e.target.value);
+    };
+
+    return (
+        <div>
+            <TextField
+                placeholder='add new task'
+                fullWidth
+                focused
+                color='secondary'
+                sx={{
+                    '& .MuiOutlinedInput-input': {
+                        color: '#FFF',
+                    },
+                }}
+                size='small'
+                value={value}
+                onChange={handlerChange}
+            />
+            <Button onClick={() => handler(value)}>ADD</Button>
+        </div>
+    )
 }
 
 export default AddItem

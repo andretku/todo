@@ -8,13 +8,15 @@ import { Input } from "@mui/base";
 import { IData } from "./models/interface";
 import AddItem from "./components/AddItem";
 import TodoList from "./components/TodoList";
+import { useAppDispatch } from "./hooks/useAppDispatch";
+import { useAppSelector } from "./hooks/useAppSelector";
 
 
 function App() {
 
 
-    const items = useSelector((store: any) => store.items) // todo=> any временно
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
+    const items = useAppSelector(store => store.items)
 
     const [todos, setTodos] = useState(data)
 
@@ -23,9 +25,12 @@ function App() {
     }, [])
 
     useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(todos))
-    }, [todos])
+        localStorage.setItem('todos', JSON.stringify(items))
+    }, [items])
 
+    useEffect(() => {
+        setTodos(items)
+    }, [items])
 
 
     const deleteTodo = (id: string) => {
@@ -55,11 +60,11 @@ function App() {
         <Main>
             <Container>
                 <H1>Todont</H1>
-                <AddItem addTodo={addTodo} />
+                <AddItem />
 
 
                 <H2>{todos.length} tasks remaining</H2>
-                <TodoList  todos={todos} />
+                <TodoList />
             </Container>
         </Main>
     );
