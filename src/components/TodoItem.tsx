@@ -1,23 +1,27 @@
-import React, { useContext } from 'react'
+import React, { useContext, memo } from 'react'
 import { Button, H3 } from '../assets/styles/app.styles'
 import { IData } from '../models/interface'
 import { WrapperBtn } from './Todo.styled'
 import { Wrapper, WrapperCheckbox } from './Todo.styled'
 import Checkbox from '@mui/material/Checkbox';
 import { pink } from '@mui/material/colors';
+import { useAppDispatch } from '../hooks/useAppDispatch'
+import { checkedTask, deleteTask } from '../store/itemsSlice'
+import { Context } from '../context'
 
 
 const TodoItem = (props: IData) => {
 
     const { completed, id, title } = props
-    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+    const dispatch = useAppDispatch()
+
 
     return (
         <Wrapper>
             <WrapperCheckbox>
                 <Checkbox
                     checked={completed}
-                    // onChange={() => handleDispatch(id)}
+                    onChange={() => dispatch(checkedTask(id))}
                     size='medium'
                     sx={{
                         color: pink[800],
@@ -32,10 +36,10 @@ const TodoItem = (props: IData) => {
 
             <WrapperBtn>
                 <Button>Edit</Button>
-                <Button>Delete</Button>
+                <Button onClick={() => dispatch(deleteTask(id))}>Delete</Button>
             </WrapperBtn>
         </Wrapper>
     )
 }
 
-export default TodoItem
+export default memo(TodoItem)
