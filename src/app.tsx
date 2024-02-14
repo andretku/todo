@@ -1,28 +1,21 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { data } from "./data/data";
 import { Container, H1, H2, Main, Button } from "./assets/styles/app.styles";
-import { activeTasks, addTask, completedTasks } from "./store/itemsSlice";
-import { Input } from "@mui/base";
 import { IData } from "./models/interface";
 import AddItem from "./components/AddItem";
 import TodoList from "./components/TodoList";
-import { useAppDispatch } from "./hooks/useAppDispatch";
 import { useAppSelector } from "./hooks/useAppSelector";
 import { WrapperBtn } from "./components/Todo.styled";
-import { Context } from "./context";
-
-
-
 
 function App() {
 
-
-    const dispatch = useAppDispatch()
     const items: IData[] = useAppSelector(store => store.items)
 
-    const [todos, setTodos] = useState(data)
-    const [filtered, setFiltered] = useState(items)
+    const [todos, setTodos] = useState<IData[]>([])
+
+    const [all, setAll] = useState(true)
+    const [active, setActive] = useState(false)
+    const [complete, setComplete] = useState(false)
+
 
     // useEffect(() => {
     //     localStorage.setItem('todos', JSON.stringify(todos))
@@ -32,48 +25,42 @@ function App() {
     //     localStorage.setItem('todos', JSON.stringify(items))
     // }, [items])
 
+
     useEffect(() => {
-        setTodos(items)
-    }, [items])
-
-
-    const deleteTodo = (id: string) => {
-        let filtered_todos = todos.filter((elem: IData) => elem.id !== id)
-        setTodos(filtered_todos)
-    }
-
-    const changeTodo = (id: string) => {
-        let changed_todos = todos.map((elem: IData) => {
-            if (elem.id === id) elem.completed = !elem.completed
-            return elem
-        })
-        setTodos(changed_todos)
-    }
-
-    const tasksToggle = (str: string) => {
-        str === 'active' && setFiltered(items.filter(elem => elem.completed === false))
-        str === 'completed' && setFiltered(items.filter(elem => elem.completed === true))
-        str === 'all' && setFiltered(items)
-    }
-
+        if(all) setTodos(items)
+        else if(active) setTodos(items.filter(elem => elem.completed === false))
+        else setTodos(items.filter(elem => elem.completed === true))
+    }, [items, all, active, complete])
 
 
     return (
         <Main>
-
             <Container>
                 <H1>Todont</H1>
                 <AddItem />
 
                 <WrapperBtn>
-                    <Button $header onClick={() => (tasksToggle('all'))}>All tasks</Button>
-                    <Button $header onClick={() => (tasksToggle('active'))}>Active tasks</Button>
-                    <Button $header onClick={() => (tasksToggle('completed'))}>Completed tasks</Button>
+                    <Button $header onClick={() => {
+                        setAll(true)
+                        setActive(false)
+                        setComplete(false)
+                        }}>All tasks</Button>
+                    <Button $header onClick={() => {
+                        setAll(false)
+                        setActive(true)
+                        setComplete(false)
+                        }}>Active tasks</Button>
+                    <Button $header onClick={() => {
+                        setAll(false)
+                        setActive(false)
+                        setComplete(true)
+                        }}>Completed tasks</Button>
                 </WrapperBtn>
 
-                <H2>{filtered.length} tasks remaining</H2>
+                <H2>{todos.length} tasks remained</H2>
 
-                <TodoList filtered={filtered} />
+                <TodoList todos={todos} />
+
             </Container>
 
         </Main>

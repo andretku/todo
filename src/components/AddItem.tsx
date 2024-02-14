@@ -3,7 +3,7 @@ import { AddItemField, Button } from '../assets/styles/app.styles';
 import { addTask } from "../store/itemsSlice";
 import { useAppDispatch } from "../hooks/useAppDispatch";
 import { useAppSelector } from "../hooks/useAppSelector";
-import { TextField } from "@mui/material";
+
 import { AddTextField } from './Todo.styled';
 
 const AddItem = () => {
@@ -13,7 +13,7 @@ const AddItem = () => {
     const [error, setError] = useState<boolean>(false)
 
     const handler = useCallback((value: string) => {
-        if (value.length >= 3) {
+        if (value.trim().length >= 3) {
             dispatch(addTask(value))
             setValue('')
         }
@@ -21,7 +21,7 @@ const AddItem = () => {
     }, [value])
 
     useEffect(() => {
-        if(error && value.length >= 3) setError(false)
+        if(error && value.trim().length >= 3) setError(false)
     }, [value])
 
     const handlerChange = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

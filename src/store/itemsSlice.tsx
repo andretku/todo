@@ -18,18 +18,8 @@ const itemsSlice = createSlice({
                 completed: false
             })
         },
-        itemsList(state) {          // * не использ
-            return state
-        },
-        activeTasks(state, action: PayloadAction<boolean>) {
-            state.find(elem => elem.completed === action.payload)
-
-        },
-        completedTasks(state) {
-            return state.filter(elem => elem.completed === true)
-        },
         deleteTask(state, action: PayloadAction<string>) {
-            return state.filter(elem => elem.id !== action.payload)
+            state.splice(+action.payload, 1)
         },
         checkedTask(state, action: PayloadAction<string>) {
             state.map(elem => {
@@ -45,9 +35,6 @@ export default itemsSlice.reducer
 
 export const {
     addTask,
-    itemsList,
-    activeTasks,
-    completedTasks,
     deleteTask,
     checkedTask,
 
