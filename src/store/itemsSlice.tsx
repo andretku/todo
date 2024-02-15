@@ -1,15 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useState } from "react";
 import { data } from "../data/data";
 import { IData } from "../models/interface";
 
-// const storage: string = localStorage.getItem('todos') || ''
-// const defaultState: string = JSON.parse(storage) ?? data
+const storage: string | null = localStorage.getItem('todos') || null
+const defaultState: IData[] = storage ? JSON.parse(storage) : data
 
 
 const itemsSlice = createSlice({
     name: 'todo',
-    initialState: data,
+    initialState: defaultState,
     reducers: {
         addTask(state, action: PayloadAction<string>) {
             state.push({
@@ -19,15 +18,20 @@ const itemsSlice = createSlice({
             })
         },
         deleteTask(state, action: PayloadAction<string>) {
-            state.splice(+action.payload, 1)
+            return state.filter(elem => elem.id !== action.payload)
+        },
+        changeTask(state, action: PayloadAction<{ id: string; title: string }>) {
+            const todo = state.find(todo => todo.id === action.payload.id);
+            if (todo) {
+                todo.title = action.payload.title;
+            }
         },
         checkedTask(state, action: PayloadAction<string>) {
             state.map(elem => {
-                if(elem.id === action.payload) elem.completed = !elem.completed
+                if (elem.id === action.payload) elem.completed = !elem.completed
                 return elem
             })
         }
-
     }
 })
 
@@ -36,6 +40,6 @@ export default itemsSlice.reducer
 export const {
     addTask,
     deleteTask,
-    checkedTask,
-
+    changeTask,
+    checkedTask
 } = itemsSlice.actions

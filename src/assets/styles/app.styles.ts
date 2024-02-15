@@ -18,7 +18,7 @@ export const Main = styled.main`
 `
 
 export const Button = styled.button<{ $header?: boolean; }>`
-    background: transparent;
+    background-color: transparent;
     width: ${props => props.$header ? "100%" : "none"};
     ${mainTextColor};
     font-size: 0.8rem;
@@ -28,13 +28,16 @@ export const Button = styled.button<{ $header?: boolean; }>`
     outline: 2px solid ${borderColor};
     border-radius: 0.5rem;
     cursor: pointer;
+    transition: 0.2s;
 
     &:hover {
-    background: ${borderColor};
+      background: ${borderColor};
+      outline: 2px solid #dac4f8;
+      box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.25);
     }
 
     &:active {
-        outline: transparent;
+        outline: 2px solid #dac4f8;
     }
 `;
 
@@ -58,8 +61,6 @@ export const H1 = styled.h1`
 
 export const H2 = styled.h2`
     margin: 24px 0;
-
-
 `
 
 export const H3 = styled.h3`
@@ -67,8 +68,3 @@ export const H3 = styled.h3`
     font-size: 1.3rem;
     margin: 0;
 `
-
-export const H4 = styled.h4`
-
-`
-

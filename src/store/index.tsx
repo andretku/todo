@@ -1,5 +1,4 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { useState } from 'react';
 import itemsSlice from './itemsSlice'
 
 const rootReducer = combineReducers({

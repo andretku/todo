@@ -20,18 +20,6 @@ export const WrapperCheckbox = styled('div')({
     margin: '30px 0 0 0',
 });
 
-// ! не использ
-export const CompletedText = styled('h2')({
-    fontSize: '1.6rem',
-    fontWeight: 400,
-    margin: 0,
-    padding: 0,
-    textTransform: 'capitalize',
-    textDecoration: 'line-through',
-    color: '#d81b60',
-});
-
-
 export const AddTextField = styled(TextField)({
     border: '2px solid #bd93f9',
     backgroundColor: 'white',

@@ -11,24 +11,17 @@ function App() {
     const items: IData[] = useAppSelector(store => store.items)
 
     const [todos, setTodos] = useState<IData[]>([])
-
     const [all, setAll] = useState(true)
     const [active, setActive] = useState(false)
     const [complete, setComplete] = useState(false)
 
-
-    // useEffect(() => {
-    //     localStorage.setItem('todos', JSON.stringify(todos))
-    // }, [])
-
-    // useEffect(() => {
-    //     localStorage.setItem('todos', JSON.stringify(items))
-    // }, [items])
-
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(items))
+    }, [items])
 
     useEffect(() => {
-        if(all) setTodos(items)
-        else if(active) setTodos(items.filter(elem => elem.completed === false))
+        if (all) setTodos(items)
+        else if (active) setTodos(items.filter(elem => elem.completed === false))
         else setTodos(items.filter(elem => elem.completed === true))
     }, [items, all, active, complete])
 
@@ -44,17 +37,24 @@ function App() {
                         setAll(true)
                         setActive(false)
                         setComplete(false)
-                        }}>All tasks</Button>
+                    }}
+                        style={{ backgroundColor: all ? '#bd93f9' : 'transparent' }}
+                    >All tasks</Button>
                     <Button $header onClick={() => {
                         setAll(false)
                         setActive(true)
                         setComplete(false)
-                        }}>Active tasks</Button>
-                    <Button $header onClick={() => {
-                        setAll(false)
-                        setActive(false)
-                        setComplete(true)
-                        }}>Completed tasks</Button>
+                    }}
+                        style={{ backgroundColor: active ? '#bd93f9' : 'transparent' }}
+                    >Active tasks</Button>
+                    <Button $header
+                        onClick={() => {
+                            setAll(false)
+                            setActive(false)
+                            setComplete(true)
+                        }}
+                        style={{ backgroundColor: complete ? '#bd93f9' : 'transparent' }}
+                    >Completed tasks</Button>
                 </WrapperBtn>
 
                 <H2>{todos.length} tasks remained</H2>

@@ -1,9 +1,7 @@
-import React, { useState, ChangeEvent, useEffect, memo, useCallback } from 'react'
+import { useState, ChangeEvent, useEffect, memo, useCallback } from 'react'
 import { AddItemField, Button } from '../assets/styles/app.styles';
 import { addTask } from "../store/itemsSlice";
 import { useAppDispatch } from "../hooks/useAppDispatch";
-import { useAppSelector } from "../hooks/useAppSelector";
-
 import { AddTextField } from './Todo.styled';
 
 const AddItem = () => {
@@ -18,15 +16,15 @@ const AddItem = () => {
             setValue('')
         }
         else setError(true)
-    }, [value])
+    }, [dispatch])
 
     useEffect(() => {
-        if(error && value.trim().length >= 3) setError(false)
-    }, [value])
+        if (error && value.trim().length >= 3) setError(false)
+    }, [value, error])
 
     const handlerChange = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setValue(e.target.value);
-    },[value])
+    }, [])
 
     return (
         <div>
